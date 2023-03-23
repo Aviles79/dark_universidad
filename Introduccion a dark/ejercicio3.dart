@@ -1,20 +1,39 @@
 import 'dart:math';
 
-class Rectangle {
-  int width;
-  int height;
-  Point origin;
+abstract class Shape {
+ 
+  factory Shape(String type) {  
+    if (type == 'square') return Square(2);
+    throw 'Can\'t create $type.';
+  }
+  
+  num get area;
+}
+class Circle implements Shape {
+  final num radius;
+  Circle(this.radius);
+  num get area => pi * pow(radius, 2);
+}
 
-  Rectangle({this.origin = const Point(0, 0), this.width = 0, this.height = 0});
 
-  @override
-  String toString() =>
-      'Origin: (${origin.x}, ${origin.y}), width: $width, height: $height';
+class Square implements Shape {
+  
+  final num side;
+  Square(this.side);
+  
+}
+
+
+class CircleMock implements Circle {
+  
+  num area = 0;
+   num radius = 0;
 }
 
 main() {
-  print(Rectangle(origin: const Point(10, 20), width: 100, height: 200));
-  print(Rectangle(origin: const Point(10, 10)));
-  print(Rectangle(width: 200));
-  print(Rectangle());
+ 
+  final circle = Shape('circle');
+  final square = Shape('square');
+  print(circle.area);
+  print(square.area);
 }
